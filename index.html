@@ -491,6 +491,91 @@ button:hover {
     <img src="libs/foto2.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
   </div>
 </section>
+<section id="euTeAmo" class="w-full h-96 relative overflow-hidden">
+  <canvas id="loveCanvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+</section>
+
+<script>
+const canvas = document.getElementById('loveCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const text = "EU TE AMO";
+let particles = [];
+let textPositions = [];
+let phase = "form"; // "form" ou "disperse"
+
+// Criar posições das letras
+function createTextPositions() {
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
+  const tctx = tempCanvas.getContext('2d');
+
+  tctx.font = "bold 180px 'Segoe UI'";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.fillText(text, canvas.width/2, canvas.height/2);
+
+  const imageData = tctx.getImageData(0,0,canvas.width,canvas.height);
+
+  textPositions = [];
+  for(let y=0; y<canvas.height; y+=10){
+    for(let x=0; x<canvas.width; x+=10){
+      const index = (y*canvas.width + x)*4;
+      if(imageData.data[index+3] > 128){
+        textPositions.push({x, y});
+      }
+    }
+  }
+
+  particles = textPositions.map(pos => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    targetX: pos.x,
+    targetY: pos.y,
+    size: Math.random()*6 + 6,
+    color: Math.random() > 0.5 ? "red" : "pink"
+  }));
+}
+
+// Animação
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    if(phase === "form") {
+      p.x += (p.targetX - p.x)*0.05;
+      p.y += (p.targetY - p.y)*0.05;
+    } else {
+      // dispersão lenta e aleatória
+      p.x += (Math.random()*canvas.width - p.x)*0.02;
+      p.y += (Math.random()*canvas.height - p.y)*0.02;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+// Alterna fase a cada 4 segundos
+setInterval(()=> {
+  phase = phase === "form" ? "disperse" : "form";
+}, 4000);
+
+createTextPositions();
+animate();
+</script>
 
 <style>
   @keyframes slide {
@@ -538,31 +623,7 @@ button:hover {
   setInterval(updateLoveTimer, 1000);
   updateLoveTimer();
 
-  // Corações e partículas
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.textContent = "❤️";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.color = `hsl(${Math.random()*360}, 70%, 60%)`;
-    heart.style.animationDuration = (Math.random()*3+3) + "s";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
-  }
-  function createParticle() {
-    const p = document.createElement("div");
-    p.classList.add("particle");
-    p.textContent = "✨";
-    p.style.left = Math.random()*100 + "vw";
-    p.style.fontSize = `${Math.random()*1.5+1}rem`;
-    p.style.animation = `floatParticle ${Math.random()*5+5}s linear forwards`;
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(),10000);
-  }
-  function startHeartsAndParticles() {
-    setInterval(createHeart, 300);
-    setInterval(createParticle, 500);
-  }
+  
 
   // Carta / envelope
   const btn = document.getElementById("surpriseBtn");
@@ -570,7 +631,7 @@ button:hover {
   const envelopeBack = document.getElementById("envelopeBack");
 
   const messageText = `Você é a melhor parte da minha vida,
-e sem você tudo perde o brilho.
+e sem você tudo perde o brilho, não tenho razões para viver.
 Feliz aniversário, meu amor! 💜`;
 
   function typeMessage(text, element, speed=50){
