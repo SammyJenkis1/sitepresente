@@ -1,0 +1,146 @@
+/* Fundo com imagem */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.35), rgba(75, 0, 130, 0.4)), url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Corações animados */
+.heart {
+  position: fixed;
+  font-size: 30px;
+  color: #ff4d6d; /* vermelho mais romântico */
+  animation: floatHearts 5s linear forwards;
+  pointer-events: none;
+  z-index: 9999;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(100vh) scale(0.5) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50vh) scale(1.2) rotate(15deg);
+  }
+  100% {
+    transform: translateY(-10vh) scale(1) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+/* Cards de fotos */
+.card-foto {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background-color: #ffffffaa; /* leve transparência para combinar com fundo */
+}
+
+.card-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+  border-radius: 1rem;
+}
+
+.card-foto:hover img {
+  transform: scale(1.07) rotate(-1deg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.1);
+}
+
+/* Mensagem / carta */
+#message {
+  display: none;
+  text-align: center;
+  font-size: 1.2rem;
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #6b21a8; /* roxo elegante */
+  border-radius: 1.5rem;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.8s ease-out;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#message.show {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+/* Estilo geral para todos os botões */
+button {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 9999px; /* arredondado */
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #ff5f9e, #8b5cf6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilho animado */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.4),
+    rgba(255,255,255,0)
+  );
+  transform: skewX(-25deg);
+}
+
+/* Efeito de brilho deslizando */
+button:hover::before {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* Hover */
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+/* Botão de música fixo */
+#audioControl {
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ff7eb3, #8b5cf6);
+  z-index: 100;
+}
+
+/* Botão de surpresa central */
+#surpriseBtn {
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #ff4b8b, #7c3aed);
+}

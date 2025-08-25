@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para o amor da minha vida 💙</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.35), rgba(75,0,130,0.4)), url('libs/foto1.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  .card-foto, .card-lugar {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    background-color: #ffffffaa;
+  }
+  .card-foto img, .card-lugar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+    border-radius: 1rem;
+  }
+  .card-foto:hover img, .card-lugar:hover img {
+    transform: scale(1.07) rotate(-1deg);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    filter: brightness(1.1);
+  }
+
+  .heart, .particle {
+    position: fixed;
+    font-size: 1.8rem;
+    pointer-events: none;
+    z-index: 50;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  }
+  @keyframes rise {
+    0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: translateY(-50vh) scale(1.2) rotate(15deg); }
+    100% { transform: translateY(-100vh) scale(1) rotate(-10deg); opacity: 0; }
+  }
+  @keyframes floatParticle {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+  }
+
+  #messageContainer {
+    position: relative;
+    width: 400px;
+    max-width: 90%;
+    margin: 2rem auto;
+    perspective: 1000px;
+  }
+  #envelope {
+    width: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+  }
+  #envelope.open {
+    transform: rotateX(180deg);
+  }
+  #envelopeFront, #envelopeBack {
+    background: rgba(255,255,255,0.95);
+    color: #6b21a8;
+    border-radius: 1.5rem;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    padding: 2rem;
+    backface-visibility: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    white-space: pre-line;
+  }
+  #envelopeBack {
+    transform: rotateX(180deg);
+  }
+
+  #loveTimer {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-top: 1rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  }
+
+  #audioControl {
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #6b21a8;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  .card-lugar {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.card-lugar .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+
+.card-lugar:hover .overlay {
+  opacity: 1;
+  transform: translateY(-5px);
+}
+.perspective { perspective: 1000px; }
+  .transform-style-preserve-3d { transform-style: preserve-3d; }
+  .backface-hidden { backface-visibility: hidden; }
+  .rotate-x-180 { transform: rotateX(180deg); }
+  @keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn { animation: fadeIn 10s ease forwards; }
+  /* Estilo geral para todos os botões */
+button {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 9999px; /* arredondado */
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #ff5f9e, #8b5cf6);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilho animado */
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.4),
+    rgba(255,255,255,0)
+  );
+  transform: skewX(-25deg);
+}
+
+/* Efeito de brilho deslizando */
+button:hover::before {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* Hover */
+button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+/* Botão de música fixo */
+#audioControl {
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #ff7eb3, #8b5cf6);
+  z-index: 100;
+}
+
+/* Botão de surpresa central */
+#surpriseBtn {
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #ff4b8b, #7c3aed);
+}
+/* Zoom das fotos do carrossel ao passar o mouse */
+.animate-slide img {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+}
+
+.animate-slide img:hover {
+  transform: scale(1.15) rotate(-1deg);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  filter: brightness(1.1);
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body class="flex flex-col min-h-screen items-center">
+
+<header class="text-center py-10">
+  <h1 class="text-5xl font-extrabold drop-shadow-lg">Para o amor da minha vida 💙</h1>
+  <p class="text-xl text-gray-200 mt-3 drop-shadow-md">Cada momento ao seu lado é inesquecível</p>
+  <p id="loveTimer"></p>
+</header>
+
+<main class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+  <div class="card-foto"><img src="libs/foto1.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto2.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto3.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto4.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto5.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto6.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto7.jpeg" /></div>
+  <div class="card-foto"><img src="libs/foto8.jpeg" /></div>
+</main>
+
+<div class="flex flex-col items-center mt-12 mb-12">
+  <button id="surpriseBtn" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:scale-110 animate-pulse text-white font-bold py-3 px-8 rounded-full shadow-2xl transition duration-300">
+    Clique para uma surpresa 💖
+  </button>
+  <div class="mt-6 animate-bounce text-5xl">💖</div>
+  
+
+  <!-- Carta / envelope -->
+  <div id="messageContainer">
+    <div id="envelope">
+      <div id="envelopeFront">Clique no botão e veja sua surpresa 💌</div>
+      <div id="envelopeBack"></div>
+    </div>
+  </div>
+
+  <!-- Música -->
+  <!-- Música - botão fixo no canto superior esquerdo -->
+<audio id="loveAudio" loop src="libs/musica1.mp3"></audio>
+<button id="audioControl" 
+  class="fixed top-4 left-4 z-50 bg-gradient-to-r from-pink-500 to-purple-500 
+         text-white font-bold py-2 px-4 rounded-full shadow-lg hover:scale-105 transition duration-300">
+  ▶️ Tocar Música
+</button>
+
+
+<!-- Seção Lugares -->
+<section id="lugares" class="w-full py-12">
+  <h2 class="text-5xl font-extrabold drop-shadow-lg text-center mb-10">Lugares que vamos conhecer 🌍</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+    
+    <div class="card-lugar relative">
+      <img src="https://media.istockphoto.com/id/621272196/pt/foto/sunflowers-in-the-italian-hill-at-sunset.jpg?s=612x612&w=0&k=20&c=QeWabRNn1u7Wli3QILhp0SSNRF1y1AvZlWNpsdQ6c2A=" />
+      <div class="overlay">Itália</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img src="https://caianomundo-prod.imgix.net/2019/02/iStock-525508231.jpg?fm=pjpg&ixlib=php-1.2.1" />
+      <div class="overlay">Canadá</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img src="https://viajoteca.com/wp-content/uploads/2020/02/shutterstock_490194529.jpg" />
+      <div class="overlay">Holanda</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img src="https://m.ahstatic.com/is/image/accorhotels/viagem-ao-chile-roteiros-e-principais-atracoes-2024-1:3by2?fmt=jpg&op_usm=1.75,0.3,2,0&resMode=sharp2&iccEmbed=true&icc=sRGB&dpr=on,1.3&wid=335&hei=223&qlt=80" />
+      <div class="overlay">Chile</div>
+    </div>
+
+  </div>
+</section>
+
+<section id="futuro" class="w-full py-16 flex flex-col items-center">
+  <h2 class="text-5xl font-extrabold drop-shadow-lg text-center mb-12">Como nos imagino daqui a alguns anos</h2>
+
+  <div class="flex flex-col items-center gap-8 max-w-lg w-full px-4">
+    <!-- Cartinha grande apenas com o texto -->
+    <div class="bg-white/95 text-purple-800 rounded-3xl shadow-2xl p-8 text-center text-xl font-semibold relative overflow-hidden animate-fadeIn">
+      <p>Me imagino ao seu lado, construindo sonhos, lutando pelo que é nosso e rindo de cada momento juntos. Cada dia com você é um pedaço do nosso futuro perfeito. ❤️</p>
+    </div>
+  </div>
+</section>
+<section id="timeline" class="w-full py-16 flex flex-col items-center" 
+         style="background: url('libs/foto_timeline.jpeg') no-repeat center center; background-size: cover;">
+  <div class="w-full max-w-4xl relative">
+    <h2 class="text-5xl font-extrabold text-white drop-shadow-lg text-center mb-12">Nossa História</h2>
+    
+    <!-- Linha central -->
+    <div class="border-l-2 border-white absolute h-full left-1/2 transform -translate-x-1/2"></div>
+    
+    <div class="space-y-8">
+      <!-- Evento 1 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Mandei um ovo de páscoa na sua casa</p>
+          <p class="text-gray-200 text-sm">20 de Abril de 2025</p>
+        </div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+
+      <!-- Evento 2 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4"></div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4 text-left">
+          <p class="font-bold text-lg text-white">Primeira conversa | falei o que sentia</p>
+          <p class="text-gray-200 text-sm">21 de Abril de 2025</p>
+        </div>
+      </div>
+
+      <!-- Evento 3 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Buquê</p>
+          <p class="text-gray-200 text-sm">22 de Abril de 2025</p>
+        </div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+
+      <!-- Evento 4 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4"></div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4 text-left">
+          <p class="font-bold text-lg text-white">Disse que te amo após tempos guardando</p>
+          <p class="text-gray-200 text-sm">24 de Abril 2025</p>
+        </div>
+      </div>
+
+      <!-- Evento 5 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Você disse que me amava</p>
+          <p class="text-gray-200 text-sm">17 de Junho de 2025</p>
+        </div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+
+      <!-- Evento 6 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4"></div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4 text-left">
+          <p class="font-bold text-lg text-white">Ganhei a pulseira</p>
+          <p class="text-gray-200 text-sm">08 de Julho de 2025</p>
+        </div>
+      </div>
+
+      <!-- Evento 7 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Você foi me ver depois do acidente</p>
+          <p class="text-gray-200 text-sm">11 de Julho de 2025</p>
+        </div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+
+      <!-- Evento 8 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4"></div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4 text-left">
+          <p class="font-bold text-lg text-white">Primeiro beijo</p>
+          <p class="text-gray-200 text-sm">20 de Julho de 2025</p>
+        </div>
+      </div>
+
+      <!-- Evento 9 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Corri na chuva comprar um <b>guarda-chuva pra você não se molhar</b></p>
+          <p class="text-gray-200 text-sm">06 de Agosto de 2025</p>
+        </div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+
+      <!-- Evento 10 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4"></div>
+        <div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4 text-left">
+          <p class="font-bold text-lg text-white">Te dei um site de presente</p>
+          <p class="text-gray-200 text-sm">23 de Agosto de 2025</p>
+        </div>
+      </div>
+
+      <!-- Evento 11 -->
+      <div class="flex justify-between items-center w-full">
+        <div class="w-1/2 pr-4 text-right">
+          <p class="font-bold text-lg text-white">Hoje, comecei melhorar o site <b>que lhe dei de presente</b></p>
+          <p class="text-gray-200 text-sm">25 de Agosto de 2025</p>
+        </div>
+<div class="w-6 h-6 rounded-full z-10 relative left-1/2 transform -translate-x-1/2"></div>
+        <div class="w-1/2 pl-4"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="filmes" class="w-full py-20">
+  <h2 class="text-6xl font-extrabold drop-shadow-lg text-center text-white mb-16">Nossos Filmes Favoritos 🎬</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+    
+    <div class="card-lugar relative">
+      <img class="h-96" src="https://cienciahoje.org.br/wp-content/uploads/2025/02/harry-potter-pedra-filosofal.jpg" alt="Harry Potter"/>
+      <div class="overlay text-xl">Harry Potter</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img class="h-96" src="https://cdn.diariodesuzano.com.br/img/c/940/600/dn_noticia_imagem/2015/11/the-hunger-games-mockingjay-part-2-tigris-is-that-you-mockingjay-527916.jpg" alt="Jogos Vorazes"/>
+      <div class="overlay text-xl">Jogos Vorazes</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img class="h-96" src="https://br.web.img3.acsta.net/pictures/14/01/23/14/12/101764.jpg" alt="A Culpa é das Estrelas"/>
+      <div class="overlay text-xl">A Culpa é das Estrelas</div>
+    </div>
+
+    <div class="card-lugar relative">
+      <img class="h-96" src="https://m.media-amazon.com/images/M/MV5BMWU0YTc0OWYtOWJjNy00ZDYzLWFlMTItMGZkNzM4YjQ5OWQzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" alt="Meu Ano em Oxford"/>
+      <div class="overlay text-xl">Meu Ano em Oxford</div>
+    </div>
+
+  </div>
+</section>
+<section class="py-20">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    
+    <!-- Foto criança -->
+    <div class="flex justify-center">
+      <img src="libs/foto10.jpeg" alt="Minha infância" 
+           class="rounded-2xl shadow-xl w-96 h-[28rem] object-cover" />
+    </div>
+    
+    <!-- Texto fofo -->
+    <div class="text-white">
+      <h2 class="text-5xl font-extrabold mb-6 drop-shadow-lg text-center md:text-left">
+        Você me faz voltar a ser criança
+      </h2>
+      <p class="text-xl leading-relaxed text-gray-200 drop-shadow-md">
+        Embora minha infância tenha sido um pouco dura e eu tenha crescido mais fechado, 
+        você conseguiu me mudar.  
+        Ao seu lado, sinto como se pudesse recuperar a pureza, os sonhos e a leveza que 
+        deixei pelo caminho.  
+        Você me mostrou que é possível ser feliz de verdade, com simplicidade, amor e entrega.  
+      </p>
+      <p class="mt-6 text-2xl font-bold text-center md:text-left">
+        Eu te amo hoje e sempre!
+      </p>
+    </div>
+  </div>
+</section>
+<section class="w-full overflow-hidden relative py-10">
+  <div class="flex animate-slide gap-4">
+    <img src="libs/foto11.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto12.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto13.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto14.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto5.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto6.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <!-- Repita para criar loop contínuo -->
+    <img src="libs/foto11.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto12.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto13.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto14.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto1.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+    <img src="libs/foto2.jpeg" class="w-64 h-64 object-cover rounded-xl shadow-lg">
+  </div>
+</section>
+<section id="euTeAmo" class="w-full h-96 relative overflow-hidden">
+  <canvas id="loveCanvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+</section>
+
+<script>
+const canvas = document.getElementById('loveCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const text = "EU TE AMO";
+let particles = [];
+let textPositions = [];
+let phase = "form"; // "form" ou "disperse"
+
+// Criar posições das letras
+function createTextPositions() {
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = canvas.width;
+  tempCanvas.height = canvas.height;
+  const tctx = tempCanvas.getContext('2d');
+
+  tctx.font = "bold 180px 'Segoe UI'";
+  tctx.textAlign = "center";
+  tctx.textBaseline = "middle";
+  tctx.fillText(text, canvas.width/2, canvas.height/2);
+
+  const imageData = tctx.getImageData(0,0,canvas.width,canvas.height);
+
+  textPositions = [];
+  for(let y=0; y<canvas.height; y+=10){
+    for(let x=0; x<canvas.width; x+=10){
+      const index = (y*canvas.width + x)*4;
+      if(imageData.data[index+3] > 128){
+        textPositions.push({x, y});
+      }
+    }
+  }
+
+  particles = textPositions.map(pos => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    targetX: pos.x,
+    targetY: pos.y,
+    size: Math.random()*6 + 6,
+    color: Math.random() > 0.5 ? "red" : "pink"
+  }));
+}
+
+// Animação
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    if(phase === "form") {
+      p.x += (p.targetX - p.x)*0.05;
+      p.y += (p.targetY - p.y)*0.05;
+    } else {
+      // dispersão lenta e aleatória
+      p.x += (Math.random()*canvas.width - p.x)*0.02;
+      p.y += (Math.random()*canvas.height - p.y)*0.02;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+// Alterna fase a cada 4 segundos
+setInterval(()=> {
+  phase = phase === "form" ? "disperse" : "form";
+}, 4000);
+
+createTextPositions();
+animate();
+</script>
+
+<style>
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-slide {
+    animation: slide 30s linear infinite;
+  }
+</style>
+
+<script>
+  // Abrir a cartinha da seção futuro
+  const futuroEnvelope = document.getElementById("futuroEnvelope");
+  const futuroFront = document.getElementById("futuroEnvelopeFront");
+  const futuroBack = document.getElementById("futuroEnvelopeBack");
+
+  futuroFront.addEventListener("click", () => {
+    futuroEnvelope.classList.toggle("rotate-x-180");
+  });
+</script>
+
+<script>
+  // Relógio digital
+  function updateLoveTimer() {
+    const startDate = new Date('2025-04-20T00:00:00');
+    const now = new Date();
+    let diff = now - startDate;
+
+    const years = Math.floor(diff / (1000*60*60*24*365));
+    diff -= years * (1000*60*60*24*365);
+    const months = Math.floor(diff / (1000*60*60*24*30));
+    diff -= months * (1000*60*60*24*30);
+    const days = Math.floor(diff / (1000*60*60*24));
+    diff -= days * (1000*60*60*24);
+    const hours = Math.floor(diff / (1000*60*60));
+    diff -= hours * (1000*60*60);
+    const minutes = Math.floor(diff / (1000*60));
+    diff -= minutes * (1000*60);
+    const seconds = Math.floor(diff / 1000);
+
+    document.getElementById('loveTimer').textContent =
+      `Nossa primeira conversa já faz ${months} meses, ${days} dias, ${hours}h ${minutes}m ${seconds}s 💖`;
+  }
+  setInterval(updateLoveTimer, 1000);
+  updateLoveTimer();
+
+  // Corações e partículas
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.textContent = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.color = `hsl(${Math.random()*360}, 70%, 60%)`;
+    heart.style.animationDuration = (Math.random()*3+3) + "s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  }
+  function createParticle() {
+    const p = document.createElement("div");
+    p.classList.add("particle");
+    p.textContent = "✨";
+    p.style.left = Math.random()*100 + "vw";
+    p.style.fontSize = `${Math.random()*1.5+1}rem`;
+    p.style.animation = `floatParticle ${Math.random()*5+5}s linear forwards`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),10000);
+  }
+  function startHeartsAndParticles() {
+    setInterval(createHeart, 300);
+    setInterval(createParticle, 500);
+  }
+
+  // Carta / envelope
+  const btn = document.getElementById("surpriseBtn");
+  const envelope = document.getElementById("envelope");
+  const envelopeBack = document.getElementById("envelopeBack");
+
+  const messageText = `Você é a melhor parte da minha vida,
+e sem você tudo perde o brilho.
+Feliz aniversário, meu amor! 💜`;
+
+  function typeMessage(text, element, speed=50){
+    let i=0;
+    element.innerHTML="";
+    const interval=setInterval(()=>{
+      element.innerHTML+=text[i];
+      i++;
+      if(i>=text.length) clearInterval(interval);
+    }, speed);
+  }
+
+  btn.addEventListener("click", ()=>{
+    envelope.classList.add("open");
+    typeMessage(messageText,envelopeBack);
+    startHeartsAndParticles();
+    btn.disabled = true;
+  });
+
+   const audio = document.getElementById("loveAudio");
+  const audioBtn = document.getElementById("audioControl");
+
+  audioBtn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      audioBtn.textContent = "⏸️ Pausar Música";
+    } else {
+      audio.pause();
+      audioBtn.textContent = "▶️ Tocar Música";
+    }
+  });
+  
+</script>
+
+</body>
+</html>
